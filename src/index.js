@@ -4,11 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom"
+import {configureStore} from "@reduxjs/toolkit"
+import {Provider} from "react-redux"
+
+const rootReducer = () => { return {comedians: []} }
+
+const store = configureStore({reducer: rootReducer})
+
+
+console.log(store.getState())
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+    <Provider store={store}>
+        <App />
+    </Provider>
+     
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

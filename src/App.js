@@ -8,17 +8,30 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
+  withRouter
 } from "react-router-dom"; 
 import Welcome from "./Components/Welcome"
 import SignupComedian from './Components/SignupComedian';
-import ComedianProfile from './Containers/ComedianProfile';
+import ComedianProfile from './Components/ComedianPreview';
+import ComediansContainer from "./Containers/ComediansContainer"
+import Header from "./Components/Header"
 
 class App extends React.Component {
 
   state = {
     currentUser: {},
-    isComedianLoggedIn: false
+    isComedianLoggedIn: false,
+    api: []
+  }
+
+  componentDidMount = () => {
+    fetch("http://localhost:3000/api/v1/comedians")
+      .then(response => response.json())
+      .then(data => this.setState({
+        api: data
+      }))
+       
   }
 
   // fetch('http://localhost:3000/api/v1/fans', {
@@ -61,26 +74,25 @@ class App extends React.Component {
       })
   }
   
-render(){
-  if (this.state.isComedianLoggedIn) {
-    return <Redirect to="/comedian_profile" />
+  render(){
+      console.log("state in app", this.state.api)
+      if (this.state.isComedianLoggedIn) {
+        return <Redirect to="/comedian_profile" />
+      }
+      return (
+        <>
+        <div className="header">
+            <Header />
+        </div>
+        <Switch>
+          <Route exact path="/" render={() => <Welcome /> } />
+          <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
+          <Route path="/comedians" render={() => <ComediansContainer api={this.state.api} /> } />
+        </Switch>
+        </>
+      );
   }
-  return (
-    <Switch>
-      <Route exact path="/">
-        <Welcome />
-      </Route>
-      <Route path="/signup">
-        <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />
-      </Route>
-      <Route path="/comedian_profile">
-        <ComedianProfile />
-      </Route>
-    </Switch>
-
-  );
-}
   
 }
 
-export default App;
+export default withRouter(App)
