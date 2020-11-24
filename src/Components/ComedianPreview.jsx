@@ -10,9 +10,11 @@ function ComedianPreview(props){
             <div className="profile">
                 <NavLink to={`/comedians/${props.comedian.id}`}>
                     <h2>{props.comedian.name}</h2>
-                    <img src={props.comedian.headshot} width="200" height="200" />
+                    <img src={props.comedian.headshot} width="200" />
                     {/* <ComedianInfo /> */}
                 </NavLink>
+                <br></br>
+                <button>SUBSCRIBE</button>
             </div>
             
         </>

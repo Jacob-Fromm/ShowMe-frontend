@@ -16,6 +16,8 @@ import SignupComedian from './Components/SignupComedian';
 import ComedianProfile from './Components/ComedianPreview';
 import ComediansContainer from "./Containers/ComediansContainer"
 import Header from "./Components/Header"
+import { connect } from 'react-redux'
+import { getShows, getComics } from "./Redux/actions"
 
 class App extends React.Component {
 
@@ -25,14 +27,11 @@ class App extends React.Component {
     api: []
   }
 
-  componentDidMount = () => {
-    fetch("http://localhost:3000/api/v1/comedians")
-      .then(response => response.json())
-      .then(data => this.setState({
-        api: data
-      }))
-       
+  componentDidMount(){
+    this.props.fetchShows()
+    this.props.fetchComics()
   }
+
 
   // fetch('http://localhost:3000/api/v1/fans', {
   //   method: 'POST',
@@ -77,7 +76,7 @@ class App extends React.Component {
   render(){
       console.log("state in app", this.state.api)
       if (this.state.isComedianLoggedIn) {
-        return <Redirect to="/comedian_profile" />
+        return <Redirect to="/comedians" />
       }
       return (
         <>
@@ -95,4 +94,9 @@ class App extends React.Component {
   
 }
 
-export default withRouter(App)
+const mdp = (dispatch) => {
+  return { fetchShows: () => dispatch(getShows()), fetchComics: () => dispatch(getComics()) }
+
+}
+
+export default connect(null, mdp)(withRouter(App))
