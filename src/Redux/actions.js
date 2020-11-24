@@ -1,4 +1,4 @@
-import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW} from "./actionTypes";
+import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW, ADD_COMEDIAN} from "./actionTypes";
 
 export const addShow = showObj => {
     console.log("submitted show:", showObj)
@@ -13,6 +13,23 @@ export const addShow = showObj => {
         })
             .then(resp => resp.json())
             .then(data => dispatch({ type: ADD_SHOW, payload: data }))
+    }
+}
+
+export const addComic = comedianObj => {
+    console.log("submitted comedian:", comedianObj)
+    return function (dispatch) {
+        fetch("http://localhost:3000/api/v1/comedians", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(comedianObj)
+        })
+            .then(resp => resp.json())
+            .then(console.log)
+            // .then(data => dispatch({ type: ADD_COMEDIAN, payload: data }))
     }
 }
 
