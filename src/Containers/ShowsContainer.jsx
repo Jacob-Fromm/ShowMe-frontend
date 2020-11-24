@@ -19,7 +19,7 @@ class AllShows extends React.Component {
         return (
             <>
                 <h1>This Comedian's Shows</h1>
-                {shows.map(show => <ShowCard key={show.id} venue={show.venue} />)}
+                {shows.map(show => <ShowCard key={show.id} venue={show.venue} show={show} />)}
             </>
         )
     }
