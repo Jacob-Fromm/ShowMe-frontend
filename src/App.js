@@ -18,6 +18,7 @@ import ComediansContainer from "./Containers/ComediansContainer"
 import Header from "./Components/Header"
 import { connect } from 'react-redux'
 import { getShows, getComics } from "./Redux/actions"
+import Links from "./Components/NavBar"
 
 class App extends React.Component {
 
@@ -81,12 +82,13 @@ class App extends React.Component {
       return (
         <>
         <div className="header">
+            <Links />
             <Header />
         </div>
         <Switch>
           <Route exact path="/" render={() => <Welcome /> } />
           <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
-          <Route path="/comedians" render={() => <ComediansContainer api={this.state.api} /> } />
+          <Route path="/comedians" render={() => <ComediansContainer /> } />
         </Switch>
         </>
       );

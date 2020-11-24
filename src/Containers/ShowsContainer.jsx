@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import { connect } from "react-redux"
 import { getShows, getComics } from "../Redux/actions"
+import ShowCard from "../Components/ShowCard"
 
 class AllShows extends React.Component {
         
@@ -18,7 +19,7 @@ class AllShows extends React.Component {
         return (
             <>
                 <h1>This Comedian's Shows</h1>
-                {shows.map(show => <p key={show.id}>{show.venue}</p>)}
+                {shows.map(show => <ShowCard key={show.id} venue={show.venue} />)}
             </>
         )
     }
