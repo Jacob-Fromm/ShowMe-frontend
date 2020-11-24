@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { FormControl, FormLabel, FormHelperText, Input, InputLabel, makeStyles, TextField, Button } from '@material-ui/core';
-import { addShow } from "../Redux/actions"
+import { addShow, editShow } from "../Redux/actions"
 import { connect } from 'react-redux'
 
 
@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
 function EditShowForm(props) {
     const classes = useStyles();
     console.log("edit show form props", props)
-    const [newShow, setShow] = useState({
+    const [editedShow, setShow] = useState({
+        id: props.show.id,
         date_time: props.show.date_time,
         comedian_id: props.show.comedian_id,
         is_virtual: props.show.is_virtual,
@@ -32,37 +33,37 @@ function EditShowForm(props) {
 
     const formChangeHandler = (e) => {
         const { name, value } = e.target
-        setShow({ ...newShow, [name]: value })
+        setShow({ ...editedShow, [name]: value })
     }
 
-    const submitShowHandler = (e) => {
-        e.preventDefault()
-        props.postShow(newShow)
-        setShow({
-            date_time: "2017-05-24T10:30",
-            comedian_id: props.comedian.id,
-            is_virtual: false,
-            venue: "",
-            address: "",
-            phone_number: "",
-            ticket_link: "",
-            ticket_price: 0,
-            venue_website: ""
-        })
-    }
-
-
-
-    // const signupHandler = (e) => {
+    // const submitShowHandler = (e) => {
     //     e.preventDefault()
-    //     props.signupHandler(newComedian)
+    //     props.postShow(newShow)
+    //     setShow({
+    //         date_time: "2017-05-24T10:30",
+    //         comedian_id: props.comedian.id,
+    //         is_virtual: false,
+    //         venue: "",
+    //         address: "",
+    //         phone_number: "",
+    //         ticket_link: "",
+    //         ticket_price: 0,
+    //         venue_website: ""
+    //     })
     // }
+
+
+
+    const editShowSubmitHandler = (e) => {
+        e.preventDefault()
+        props.patchShow(editedShow)
+    }
 
     return (
         <>
-            <h3>Edit Show From</h3>
+            <h3>Edit Show Form</h3>
             <FormControl>
-                <form className={classes.root} noValidate autoComplete="off" onSubmit={submitShowHandler}>
+                <form className={classes.root} noValidate autoComplete="off" onSubmit={editShowSubmitHandler}>
                     <TextField
                         id="datetime-local"
                         label="Show Date and Time"
@@ -71,16 +72,16 @@ function EditShowForm(props) {
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        value={newShow.date_time}
+                        value={editedShow.date_time}
                         onChange={formChangeHandler}
                     />
-                    <TextField id="standard-basic" name="is_virtual" label="Is this show virtual?" value={newShow.is_virtual} onChange={formChangeHandler} />
-                    <TextField id="standard-basic" name="venue" label="Venue Name" value={newShow.venue} onChange={formChangeHandler} />
-                    <TextField id="standard-basic" name="address" label="Address" value={newShow.address} onChange={formChangeHandler} />
-                    <TextField id="standard-basic" name="phone_number" label="Phone Number" value={newShow.phone_number} onChange={formChangeHandler} />
-                    <TextField id="standard-basic" name="ticket_link" label="Link to Tickets" value={newShow.ticket_link} onChange={formChangeHandler} />
-                    <TextField id="standard-basic" name="ticket_price" label="Ticket Price" value={newShow.ticket_price} onChange={formChangeHandler} />
-                    <TextField id="standard-basic" name="venue_website" label="Venue Website" value={newShow.venue_website} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="is_virtual" label="Is this show virtual?" value={editedShow.is_virtual} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="venue" label="Venue Name" value={editedShow.venue} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="address" label="Address" value={editedShow.address} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="phone_number" label="Phone Number" value={editedShow.phone_number} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="ticket_link" label="Link to Tickets" value={editedShow.ticket_link} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="ticket_price" label="Ticket Price" value={editedShow.ticket_price} onChange={formChangeHandler} />
+                    <TextField id="standard-basic" name="venue_website" label="Venue Website" value={editedShow.venue_website} onChange={formChangeHandler} />
                     <Button type="submit">Submit</Button>
                     {/* <TextField id="filled-basic" label="Filled" variant="filled" />
                 <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
@@ -93,7 +94,7 @@ function EditShowForm(props) {
 
 // write to the store
 const mdp = (dispatch) => {
-    return { postShow: (showObj) => dispatch(addShow(showObj)) }
+    return { patchShow: (showObj) => dispatch(editShow(showObj)) }
 }
 
 export default connect(null, mdp)(EditShowForm)

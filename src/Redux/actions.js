@@ -1,4 +1,4 @@
-import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH} from "./actionTypes";
+import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW} from "./actionTypes";
 
 export const addShow = showObj => {
     console.log("submitted show:", showObj)
@@ -14,8 +14,34 @@ export const addShow = showObj => {
             .then(resp => resp.json())
             .then(data => dispatch({ type: ADD_SHOW, payload: data }))
     }
-    
+}
 
+export const editShow = showObj => {
+    console.log("show to edit", showObj)
+    return function (dispatch) {
+        fetch(`http://localhost:3000/api/v1/events/${showObj.id}`, {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(showObj)
+        })
+            .then(resp=>resp.json())
+            .then(data => dispatch(getShows()))
+            
+    }
+}
+export const deleteShow = showObj => {
+    console.log("show to delete", showObj)
+    return function (dispatch) {
+        fetch(`http://localhost:3000/api/v1/events/${showObj.id}`, {
+            method: "DELETE"
+        })
+            .then(resp=>resp.json())
+            .then(data => dispatch(getShows()))
+            
+    }
 }
 
 export const getShows = () => {
