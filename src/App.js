@@ -17,8 +17,11 @@ import ComedianProfile from './Components/ComedianPreview';
 import ComediansContainer from "./Containers/ComediansContainer"
 import Header from "./Components/Header"
 import { connect } from 'react-redux'
-import { getShows, getComics } from "./Redux/actions"
+import { getShows, getComics, getFans } from "./Redux/actions"
 import Links from "./Components/NavBar"
+import AppWrapper from "./Components/AppWrapper"
+import Login from "./Components/Login"
+import FanPage from "./Containers/FanPage"
 
 class App extends React.Component {
 
@@ -31,22 +34,23 @@ class App extends React.Component {
   componentDidMount(){
     this.props.fetchShows()
     this.props.fetchComics()
-    fetch('http://localhost:3000/api/v1/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify({
-        user: {
-          name: "jacobus",
-          email: "jacob@sylvia.com",
-          password: "pissword"
-        }
-      })
-    })
-      .then(r => r.json())
-      .then(console.log)
+    this.props.fetchFans()
+    // fetch('http://localhost:3000/api/v1/users', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     user: {
+    //       name: "jacobus",
+    //       email: "jacob@sylvia.com",
+    //       password: "pissword"
+    //     }
+    //   })
+    // })
+    //   .then(r => r.json())
+    //   .then(console.log)
 
   }
 
@@ -78,28 +82,18 @@ class App extends React.Component {
       console.log("redux state in app", this.props.state)
       return (
         <>
-        {this.props.isLoggedIn ? 
-        <>
-          <Redirect to={`/fans/${this.props.currentUser.id}`}/>
-        </>
-        
-        : 
-        <>
-        
-          <div className="header">
-              <Links />
-              <Header />
-          </div>
-          <Switch>
-            <Route exact path="/" render={() => <Welcome /> } />
-            <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
-            <Route path="/comedians" render={() => <ComediansContainer /> } />
-          </Switch>
-        
-        </>
-        
-        
-        }
+        <div className="header">
+            <Links />
+            <Header />
+        </div>
+        <Switch>
+          <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
+          <Route path="/comedians" render={() => <ComediansContainer /> } />
+          <Route path= "/login" render={() => <Login />} />
+          <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
+          <Route path="/fans/:id" redner={() => <FanPage />}/>
+          <Route exact path="/" component={AppWrapper} />
+        </Switch>
 
         </>
       );
@@ -108,7 +102,7 @@ class App extends React.Component {
 }
 
 const mdp = (dispatch) => {
-  return { fetchShows: () => dispatch(getShows()), fetchComics: () => dispatch(getComics()) }
+  return { fetchShows: () => dispatch(getShows()), fetchComics: () => dispatch(getComics()), fetchFans: () => dispatch(getFans()) }
 
 }
 
@@ -116,4 +110,4 @@ const msp = (state) => {
   return {state: state}
 }
 
-export default connect(msp, mdp)(withRouter(App))
+export default withRouter(connect(msp, mdp)((App)))

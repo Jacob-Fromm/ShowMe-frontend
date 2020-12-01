@@ -10,8 +10,10 @@ import { getShows, getComics } from "../Redux/actions"
 class ComedianProfileContainer extends React.Component {
     // console.log("comedian profile props", this.props)
 
-    
+   
     render(){
+        
+        
         return (
             <>
                 <div className="profile">
@@ -44,7 +46,7 @@ const mdp = (dispatch) => {
 }
 
 const msp = (state) => {
-    return { comedians: state.comedians, shows: state.shows }
+    return { comedians: state.comedians, events: state.events }
 }
 
 export default connect(msp, mdp)(ComedianProfileContainer)
