@@ -89,9 +89,9 @@ class App extends React.Component {
         <Switch>
           <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
           <Route path="/comedians" render={() => <ComediansContainer /> } />
-          <Route path= "/login" render={() => <Login />} />
+          <Route path= "/login" render={() => <Login fans={this.props.fans}/>} />
           <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
-          <Route path="/fans/:id" redner={() => <FanPage />}/>
+          <Route path="/fans/:id" render={({match}) => <FanPage />}/>
           <Route exact path="/" component={AppWrapper} />
         </Switch>
 

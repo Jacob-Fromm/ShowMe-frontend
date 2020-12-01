@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import {useHistory} from "react-router-dom"
 import { FormControl, FormLabel, FormHelperText, Input, InputLabel, makeStyles, TextField, Button } from '@material-ui/core';
 import { connect } from "react-redux"
+import {setUser, getFans} from "../Redux/actions"
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -29,9 +30,12 @@ const Login = (props) => {
 
     const loginHandler = (e) => {
         e.preventDefault()
-        let foundUser = props.fans.find(fan => user.email == fan.email )
+        let foundUser = props.fans.find(fan => user.email === fan.email )
+        props.loginUser(foundUser)
         history.push(`/fans/${foundUser.id}`)
     }
+
+    console.log("login props", props)
     
 
     return (
@@ -40,7 +44,7 @@ const Login = (props) => {
             <FormControl>
                 <form className={classes.root} noValidate autoComplete="off" onSubmit={loginHandler}>
                 <TextField id="standard-basic" name="email" label="email" value={user.email} onChange={formChangeHandler}/>
-                <TextField id="standard-basic" name="password" label="password" value={user.password} onChange={formChangeHandler}/>
+                <TextField id="standard-password-input" type="password" name="password" label="password" value={user.password} onChange={formChangeHandler}/>
                 <Button type="submit">Submit</Button>
                 </form>
             </FormControl>
@@ -53,4 +57,9 @@ const msp = (state) => {
     return {fans: state.fans}
 }
 
-export default connect(msp)(Login)
+const mdp = (dispatch) => {
+    return { loginUser: (userObj) => dispatch(setUser(userObj)) }
+}
+
+
+export default connect(msp, mdp)(Login)
