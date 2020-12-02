@@ -35,6 +35,8 @@ class App extends React.Component {
     this.props.fetchShows()
     this.props.fetchComics()
     this.props.fetchFans()
+
+    
     // fetch('http://localhost:3000/api/v1/users', {
     //   method: 'POST',
     //   headers: {
@@ -91,6 +93,7 @@ class App extends React.Component {
           <Route path="/comedians" render={() => <ComediansContainer /> } />
           <Route path= "/login" render={() => <Login fans={this.props.fans}/>} />
           <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
+          <Route path="/profile" render={() => <FanPage />}/>
           <Route path="/fans/:id" render={({match}) => <FanPage />}/>
           <Route exact path="/" component={AppWrapper} />
         </Switch>

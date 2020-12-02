@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom"
 import {configureStore} from "@reduxjs/toolkit"
 import {applyMiddleware, createStore, middleWare} from "redux"
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from "redux-thunk"
 import {Provider} from "react-redux"
 import rootReducer from "./Redux/reducer" 
@@ -13,7 +14,7 @@ import rootReducer from "./Redux/reducer"
 
 
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 
 console.log(store.getState())

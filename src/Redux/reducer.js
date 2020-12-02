@@ -1,5 +1,5 @@
 import {combineReducers} from "redux"
-import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELETE_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER} from "./actionTypes";
+import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELETE_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, FOLLOW_COMIC} from "./actionTypes";
 
 // const rootReducer = (state = {
 //     comedians: [],
@@ -85,6 +85,7 @@ function showsReducer(state = defaultState.shows, action){
            return state
    }
 }
+
 
 
 const rootReducer = combineReducers({

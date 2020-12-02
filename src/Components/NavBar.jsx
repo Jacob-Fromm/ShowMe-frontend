@@ -1,7 +1,8 @@
 import React, {Component} from "react"
-// import { Link } from 'react-router-dom'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
+import {Link as RouterLink} from "react-router-dom"
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,13 +15,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Links() {
     const classes = useStyles();
-    const preventDefault = (event) => event.preventDefault();
+    // const preventDefault = (event) => event.preventDefault();
 
 
     return (
         <Typography className={classes.root}>
-            <Link href="/">Home</Link>
-            <Link href="/comedians" >All Comedians</Link>
+            <Link component={RouterLink} to="/" >Home</Link>
+            <Link component={RouterLink} to="/comedians"  >All Comedians</Link>
+            <Link component={RouterLink} to="/login" >Login</Link>
+            <Link component={RouterLink} to="/profile" >Profile</Link>
         </Typography>
     );
 }

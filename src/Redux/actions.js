@@ -1,4 +1,4 @@
-import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER} from "./actionTypes";
+import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, ADD_FOLLOWED_COMICS_FROM_FETCH} from "./actionTypes";
 
 export const addShow = showObj => {
     return function (dispatch) {
@@ -58,6 +58,29 @@ export const deleteShow = showObj => {
             .then(resp=>resp.json())
             .then(data => dispatch(getShows()))
             
+    }
+}
+
+export const getFollowedComics = followObj => {
+    return function (dispatch) {
+        fetch("http://localhost:3000/api/v1/comedian_fans")
+            .then(resp=>resp.json())
+            .then(data => dispatch({type: ADD_FOLLOWED_COMICS_FROM_FETCH, payload: data}))
+    }
+}
+
+export const followComic = followObj => {
+    return function (dispatch) {
+        fetch("http://localhost:3000/api/v1/comedian_fans", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(followObj)
+        })
+            .then(resp=>resp.json())
+            .then(data => dispatch(getFans()))
     }
 }
 

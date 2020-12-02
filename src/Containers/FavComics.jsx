@@ -6,15 +6,15 @@ class FavComics extends React.Component {
     
     render(){
         console.log("fav comics props", this.props)
-        const favComics = this.props.currentUser.comedians
+        // const favComics = this.props.fan.comedians
         
         return (
             <>
             <h1>fav comics</h1>
-            {favComics.length === 0 ? 
-                <p>no comics favorited</p>
+            {this.props.fan ? 
+                this.props.fan.comedians.map(comedian => <ComedianPreview key={comedian.id} comedian={comedian} />) 
             : 
-                favComics.map(comedian => <ComedianPreview key={comedian.id} comedian={comedian} />) 
+            <p>no comics favorited</p>
 
             }
             

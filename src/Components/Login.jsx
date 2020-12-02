@@ -32,7 +32,7 @@ const Login = (props) => {
         e.preventDefault()
         let foundUser = props.fans.find(fan => user.email === fan.email )
         props.loginUser(foundUser)
-        history.push(`/fans/${foundUser.id}`)
+        history.push("/profile")
     }
 
     console.log("login props", props)
@@ -58,7 +58,7 @@ const msp = (state) => {
 }
 
 const mdp = (dispatch) => {
-    return { loginUser: (userObj) => dispatch(setUser(userObj)) }
+    return { loginUser: (foundUser) => dispatch(setUser(foundUser)) }
 }
 
 

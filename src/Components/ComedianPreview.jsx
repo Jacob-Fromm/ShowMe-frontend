@@ -2,9 +2,16 @@ import React, { Component, useState } from 'react';
 import ComedianInfo from "../Containers/ComedianInfoContainer"
 import { connect } from "react-redux"
 import { NavLink } from "react-router-dom"
+import {followComic, getFans, setUser} from "../Redux/actions"
 
 function ComedianPreview(props){
    console.log("comedian profile props", props)
+   const followObj = {comedian_id: props.comedian.id, fan_id: props.currentUser.id}
+   
+   const subscribeClickHandler = e => {
+        props.followComic(followObj)
+   }
+
     return(
         <>
             <div className="profile">
@@ -14,7 +21,7 @@ function ComedianPreview(props){
                     {/* <ComedianInfo /> */}
                 </NavLink>
                 <br></br>
-                <button>SUBSCRIBE</button>
+                <button onClick={subscribeClickHandler}>SUBSCRIBE</button>
             </div>
             
         </>
@@ -22,4 +29,16 @@ function ComedianPreview(props){
     )
 }
 
-export default ComedianPreview
+// const mdp = dispatch => {
+//     return { subscribeToComic: (followObj) => dispatch(followComic(followObj)) }
+// }
+
+const msp = state => {
+    return {currentUser: state.currentUser}
+}
+
+const mdp = dispatch => {
+    return {followComic: (followObj) => dispatch(followComic(followObj))}
+}
+
+export default connect(msp, mdp)(ComedianPreview)
