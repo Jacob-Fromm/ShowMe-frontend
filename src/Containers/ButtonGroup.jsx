@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
             <ButtonGroup variant="contained" color="secondary" aria-label="contained primary button group">
                 <Button onClick={handleComedianClick}>Comedian</Button>
                 <Button onClick={handleFanClick}>Fan</Button>
-                <Button>Producer</Button>
+                {/* <Button>Producer</Button> */}
             </ButtonGroup>
         </div>
     );
