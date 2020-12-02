@@ -39,6 +39,7 @@
 
 .welcome-page {
   text-align: center;
+  background-color: cornflowerblue;
 }
 
 .signup {
@@ -47,4 +48,8 @@
 
 .header {
   text-align: center;
+}
+
+.profile {
+  position: relative;
 }

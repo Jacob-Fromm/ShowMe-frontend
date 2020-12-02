@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab"
 import ButtonGroup from "../Containers/ButtonGroup"
 import { connect } from "react-redux"
+import ComediansContainer from "../Containers/ComediansContainer"
 
 function Welcome(props){
 
@@ -12,11 +13,9 @@ function Welcome(props){
     }
     return(
         <div className="welcome-page">
-            <h1>ShowMe</h1>
-            <h2>The Independent Comedy App</h2>
-            <br></br>
             <h3>I am a:</h3>
             <ButtonGroup redirect={redirect} />
+            <ComediansContainer />
         </div>
             
     )

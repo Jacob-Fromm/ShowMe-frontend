@@ -16,8 +16,7 @@ class ComediansContainer extends React.Component {
         console.log("comedian container props", this.props)
         return (
 
-            <>
-                <h1>Comedians Container</h1>
+            <div className="welcome-page">
 
                 {this.props.comedians.length === 0 ? <h1>LOADING</h1> :
 
@@ -35,10 +34,20 @@ class ComediansContainer extends React.Component {
                                 </>
                             )
                         }} />
+                        <Route path="/welcome" render={() => {
+                            const comedians = this.props.comedians.map(comedianObj => <ComedianPreview key={comedianObj.id} id={comedianObj.id} comedian={comedianObj} name={comedianObj.name} website={comedianObj.personal_website} headshot={comedianObj.headshot} city={comedianObj.city} />)
+                            return (
+                                <>
+                                <div className="welcome-display">
+                                    {this.props.comedians.length === 0 ? <h1>LOADING</h1> : comedians}
+                                </div>
+                                </>
+                            )
+                        }} />
                     </Switch>
                 }
 
-            </>
+            </div>
         )
 
     }
