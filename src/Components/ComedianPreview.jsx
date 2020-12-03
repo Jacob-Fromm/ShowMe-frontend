@@ -9,9 +9,18 @@ function ComedianPreview(props){
    const followObj = {comedian_id: props.comedian.id, fan_id: props.currentUser.id}
    
    const subscribeClickHandler = e => {
-        props.followComic(followObj)
+        props.followComic(props.comedian, props.currentUser)
    }
 
+//    const comedianEvents = () => {
+//         props.events.map(show => 
+//            { if (show.comedian_id === props.comedian.id){
+//                 <p>{show.date_time}: {show.venue}</p>
+//         }}
+//         )}
+
+    
+console.log("comedian props", props.comedian)
     return(
         <>
             <div className="profile">
@@ -20,8 +29,9 @@ function ComedianPreview(props){
                     <img src={props.comedian.headshot} width="200" />
                 </NavLink>
                     <p>upcoming shows:</p>
-                    {props.comedian.events.map(show => <p>{show.date_time}: {show.venue}</p>)}
+                {props.comedian.events.map(show => <p>{show.venue}</p>)}
                     {/* <ComedianInfo /> */}
+                <br></br>
                 <br></br>
                 <button onClick={subscribeClickHandler}>SUBSCRIBE</button>
             </div>
@@ -36,11 +46,11 @@ function ComedianPreview(props){
 // }
 
 const msp = state => {
-    return {currentUser: state.currentUser}
+    return {currentUser: state.currentUser, comedians: state.comedians, events: state.events}
 }
 
 const mdp = dispatch => {
-    return {followComic: (followObj) => dispatch(followComic(followObj))}
+    return {followComic: (followObj, currentUser) => dispatch(followComic(followObj, currentUser))}
 }
 
 export default connect(msp, mdp)(ComedianPreview)

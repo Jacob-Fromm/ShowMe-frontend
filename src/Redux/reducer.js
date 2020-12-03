@@ -34,6 +34,9 @@ function usersReduer(state = defaultState.currentUser, action){
         case SET_USER:
             console.log(action.payload)
             return action.payload
+        case FOLLOW_COMIC:
+            console.log("state, action: ", state, action)
+                return {...state, comedians: [...state.comedians, action.payload]}
         default:
             return state
     }

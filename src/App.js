@@ -35,6 +35,7 @@ class App extends React.Component {
     this.props.fetchShows()
     this.props.fetchComics()
     this.props.fetchFans()
+    // this.props.fetchFollows()
 
     
     // fetch('http://localhost:3000/api/v1/users', {

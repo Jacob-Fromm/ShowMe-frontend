@@ -16,7 +16,7 @@ class ComedianProfileContainer extends React.Component {
         
         return (
             <>
-                <div className="profile">
+                <div>
                     <h2>{this.props.comedian.name}</h2>
                     <img src={this.props.comedian.headshot} width="200" />
                     {/* <ComedianInfo /> */}

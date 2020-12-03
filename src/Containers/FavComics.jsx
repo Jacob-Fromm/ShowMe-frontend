@@ -12,7 +12,7 @@ class FavComics extends React.Component {
             <>
             <h1>fav comics</h1>
             {this.props.fan ? 
-                this.props.fan.comedians.map(comedian => <ComedianPreview key={comedian.id} comedian={comedian} />) 
+                this.props.fan.comedians.map(comedian => <ComedianPreview key={comedian.id} comedian={comedian} events={comedian.events} />) 
             : 
             <p>no comics favorited</p>
 

@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  
+}
+
+body {
+  /* background-image: url("https://media2.s-nbcnews.com/i/MSNBC/Components/Video/Projects/_originals/Careers/p_nww_slasher_101812.jpg"); */
+  background-color: powderblue ;
 }
 
 .App-logo {
@@ -51,5 +57,26 @@
 }
 
 .profile {
+  /* height: 400px; */
   position: relative;
+  border: springgreen;
+  border-style: solid;
+  border-spacing: 3px;
+  background-color: violet;
+  box-shadow: purple;
+  min-height: 450px;
+  max-width: 600px;
+  align-items: center;
+  align-content: center;
+}
+
+.profile img {
+  height: 200px;
+}
+
+.profile button {
+  margin-bottom: 10px;
+  /* position: relative;
+  align-self: relative;
+  float: center; */
 }
