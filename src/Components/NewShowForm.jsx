@@ -19,7 +19,7 @@ function NewShowForm(props){
     const classes = useStyles();
 
     const [newShow, setShow] = useState({
-        date_time: "2017-05-24T10:30",
+        date_time: "",
         comedian_id: props.comedian.id,
         is_virtual: false,
         venue: "",
@@ -31,6 +31,7 @@ function NewShowForm(props){
     })
 
     const formChangeHandler = (e) => {
+        console.log("show: ", newShow)
         const { name, value } = e.target
         setShow({ ...newShow, [name]: value })
     }
@@ -39,7 +40,7 @@ function NewShowForm(props){
         e.preventDefault()
         props.postShow(newShow)
         setShow({
-            date_time: "2017-05-24T10:30",
+            date_time: "",
             comedian_id: props.comedian.id,
             is_virtual: false,
             venue: "",

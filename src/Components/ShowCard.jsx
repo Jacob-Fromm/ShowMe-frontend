@@ -37,7 +37,8 @@ function ShowCard (props) {
             </>
         :
             <>
-                <p>{props.venue}</p>
+                <p>{props.show.date_time} at {props.venue}</p>
+                <p>Tickets: {props.show.ticket_link }</p>
                 <div className={classes.root}>
                     <Button variant="contained" size="small" onClick={toggle}>edit</Button>
                 </div>

@@ -18,8 +18,10 @@ function ComedianPreview(props){
                 <NavLink to={`/comedians/${props.comedian.id}`}>
                     <h2>{props.comedian.name}</h2>
                     <img src={props.comedian.headshot} width="200" />
-                    {/* <ComedianInfo /> */}
                 </NavLink>
+                    <p>upcoming shows:</p>
+                    {props.comedian.events.map(show => <p>{show.date_time}: {show.venue}</p>)}
+                    {/* <ComedianInfo /> */}
                 <br></br>
                 <button onClick={subscribeClickHandler}>SUBSCRIBE</button>
             </div>

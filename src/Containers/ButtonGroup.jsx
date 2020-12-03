@@ -24,9 +24,11 @@ const useStyles = makeStyles((theme) => ({
 
     function handleComedianClick(){
         history.push("/signup")
+        // props.setUserType()
     }
 
     function handleFanClick(){
+        // props.setUserType()
         history.push("/login")
         // props.setUserFan()
         // props.redirect()
