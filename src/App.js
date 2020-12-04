@@ -22,6 +22,8 @@ import Links from "./Components/NavBar"
 import AppWrapper from "./Components/AppWrapper"
 import Login from "./Components/Login"
 import FanPage from "./Containers/FanPage"
+import NewLogin from "./Components/NewLogin"
+import NewSignup from "./Components/NewSignup"
 
 class App extends React.Component {
 
@@ -35,9 +37,7 @@ class App extends React.Component {
     this.props.fetchShows()
     this.props.fetchComics()
     this.props.fetchFans()
-    // this.props.fetchFollows()
 
-    
     // fetch('http://localhost:3000/api/v1/users', {
     //   method: 'POST',
     //   headers: {
@@ -46,42 +46,19 @@ class App extends React.Component {
     //   },
     //   body: JSON.stringify({
     //     user: {
-    //       name: "jacobus",
-    //       email: "jacob@sylvia.com",
-    //       password: "pissword"
+    //       name: "sylviawoods",
+    //       email: "pee@piss.com",
+    //       password: "anotherpassword"
     //     }
     //   })
     // })
     //   .then(r => r.json())
     //   .then(console.log)
-
   }
 
-  // comedianSignupSubmitHandler = (newUser) => {
-  //   console.log("new user in app.js", newUser)
-  //   fetch("http://localhost:3000/api/v1/comedians", {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //       "accept": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       comedian: {
-  //         name: newUser.name,
-  //         email: newUser.email,
-  //         password: newUser.password,
-  //         personal_website: newUser.website,
-  //         city: newUser.city
-  //       }
-  //     })
-  //   })
-  //     .then(r => r.json())
-  //     .then(user => {
-  //       this.setState({ currentUser: user, isComedianLoggedIn: true })
-  //     })
-  // }
   
   render(){
+    
       console.log("redux state in app", this.props.state)
       return (
         <>
@@ -90,12 +67,14 @@ class App extends React.Component {
             <Header />
         </div>
         <Switch>
-          <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
+          {/* <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/> */}
           <Route path="/comedians" render={() => <ComediansContainer /> } />
           <Route path= "/login" render={() => <Login fans={this.props.fans}/>} />
           <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
           <Route path="/profile" render={() => <FanPage />}/>
           <Route path="/fans/:id" render={({match}) => <FanPage />}/>
+          <Route path="/login_test" render={() => <NewLogin />} />
+          <Route path="/signup" render={() => <NewSignup />} />
           <Route exact path="/" component={AppWrapper} />
         </Switch>
 

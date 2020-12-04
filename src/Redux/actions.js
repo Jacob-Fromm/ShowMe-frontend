@@ -1,4 +1,4 @@
-import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, ADD_FOLLOWED_COMICS_FROM_FETCH, FOLLOW_COMIC} from "./actionTypes";
+import { ADD_SHOW, ADD_SHOWS_FROM_FETCH, ADD_COMICS_FROM_FETCH, EDIT_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, ADD_FOLLOWED_COMICS_FROM_FETCH, FOLLOW_COMIC, SIGNUP_USER} from "./actionTypes";
 
 export const addShow = showObj => {
     return function (dispatch) {
@@ -123,6 +123,21 @@ export const setUser = userObj => {
     return {
         type: SET_USER,
         payload: userObj
+    }
+}
+
+export const signupUser = newUser => {
+    return function (dispatch) {
+        fetch("http://localhost:3000/api/v1/users", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(newUser)
+        })
+            .then(resp=>resp.json())
+            .then(data => dispatch({type: SIGNUP_USER, payload: data}))
     }
 }
 

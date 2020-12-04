@@ -1,5 +1,5 @@
 import {combineReducers} from "redux"
-import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELETE_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, FOLLOW_COMIC} from "./actionTypes";
+import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELETE_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, FOLLOW_COMIC, SIGNUP_USER} from "./actionTypes";
 
 // const rootReducer = (state = {
 //     comedians: [],
@@ -37,6 +37,8 @@ function usersReduer(state = defaultState.currentUser, action){
         case FOLLOW_COMIC:
             console.log("state, action: ", state, action)
                 return {...state, comedians: [...state.comedians, action.payload]}
+        case SIGNUP_USER:
+                console.log("new user: ", action.payload)
         default:
             return state
     }

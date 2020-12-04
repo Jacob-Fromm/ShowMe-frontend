@@ -59,12 +59,12 @@ const ComediansContainer =  (props) => {
                         )
                     }} />
                     <Route path="/welcome" render={() => {
-                        const comedians = props.comedians.map(comedianObj => 
+                        // const comedians = props.comedians.map(comedianObj => 
                     
-                            <ComedianPreview key={comedianObj.id} id={comedianObj.id} comedian={comedianObj} name={comedianObj.name} website={comedianObj.personal_website} headshot={comedianObj.headshot} city={comedianObj.city} />)
+                        //     <ComedianPreview key={comedianObj.id} id={comedianObj.id} comedian={comedianObj} name={comedianObj.name} website={comedianObj.personal_website} headshot={comedianObj.headshot} city={comedianObj.city} />)
                         return (
                             <>
-                            <div >
+                            {/* <div >
                                     {props.comedians.length === 0 ? 
                                         <h1>LOADING</h1> 
                                 :
@@ -77,7 +77,7 @@ const ComediansContainer =  (props) => {
                                         </Grid>
                                     </div>
                                 }
-                            </div>
+                            </div> */}
                             </>
                         )
                     }} />
