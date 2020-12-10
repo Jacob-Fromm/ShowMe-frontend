@@ -23,35 +23,24 @@ const defaultState = {
     comedians: [],
     shows: [],
     fans: [],
-    currentUser: {},
-    isLoggedIn: false
+    currentUser: null
 }
 
-function usersReduer(state = defaultState.currentUser, action){
+function usersReducer(state = defaultState.currentUser, action){
     switch (action.type) {
         case SET_FAN:
             return action.payload
         case SET_USER:
-            console.log(action.payload)
+            console.log("user in reducer: ", action.payload.user)
             return action.payload
         case FOLLOW_COMIC:
             console.log("state, action: ", state, action)
                 return {...state, comedians: [...state.comedians, action.payload]}
-        case SIGNUP_USER:
-                console.log("new user: ", action.payload)
         default:
             return state
     }
 }
 
-function loginReducer(state=defaultState.isLoggedIn, action){
-    switch (action.type) {
-        case SET_FAN:
-            return true
-        default: 
-            return state
-    }
-}
 
 function fansReducer(state=defaultState.fans, action){
     switch (action.type) {
@@ -97,8 +86,7 @@ const rootReducer = combineReducers({
     comedians: comediansReducer,
     events: showsReducer,
     fans: fansReducer,
-    currentUser: usersReduer,
-    isLoggedIn: loginReducer
+    currentUser: usersReducer
 })
 
 export default rootReducer

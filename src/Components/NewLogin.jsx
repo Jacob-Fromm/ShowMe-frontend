@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useHistory} from "react-router-dom" 
+import { connect } from "react-redux"
+import { loginUser } from "../Redux/actions"
 
 
 function Copyright() {
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NewLogin() {
+function NewLogin(props) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -57,12 +59,28 @@ export default function NewLogin() {
         password: ""
     })
 
+    const [user2, setUser2] = useState(props.currentUser)
+
     const formChangeHandler = (e) => {
         const { name, value } = e.target
         setUser({ ...user, [name]: value })
        
     }
-    console.log("user", user)
+    
+    const submitLoginHandler = (e) => {
+        e.preventDefault()
+        props.login(user)
+        
+    }
+
+
+    useEffect(() => {
+        setUser2(props.currentUser)
+        if (user2) {
+            localStorage.setItem("token", user2.jwt)
+            history.push("/profile")
+        }
+    })
 
     return (
         <Container component="main" maxWidth="xs">
@@ -74,7 +92,7 @@ export default function NewLogin() {
                 <Typography component="h1" variant="h5">
                     Sign In
         </Typography>
-                <form className={classes.form} noValidate>
+                <form onSubmit={submitLoginHandler}className={classes.form} noValidate>
                     <TextField
                         value={user.email}
                         onChange={formChangeHandler}
@@ -134,3 +152,13 @@ export default function NewLogin() {
         </Container>
     );
 }
+
+const mdp = dispatch => {
+    return {login: (userObj) => dispatch(loginUser(userObj))}
+}
+
+const msp = state => {
+    return {currentUser: state.currentUser}
+}
+
+export default connect(msp, mdp)(NewLogin)

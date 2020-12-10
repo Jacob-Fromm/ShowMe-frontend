@@ -23,6 +23,7 @@ export default function Links() {
             <Link component={RouterLink} to="/" >Home</Link>
             <Link component={RouterLink} to="/comedians"  >All Comedians</Link>
             <Link component={RouterLink} to="/login" >Login</Link>
+            <Link component={RouterLink} to="/signup" >Create Account</Link>
             <Link component={RouterLink} to="/profile" >Profile</Link>
         </Typography>
     );

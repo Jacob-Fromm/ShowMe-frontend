@@ -15,7 +15,6 @@ function Welcome(props){
         <div className="welcome-page">
             <h3>I am a:</h3>
             <ButtonGroup redirect={redirect} />
-            <h2>Featured Comedians:</h2>
             <ComediansContainer />
         </div>
             

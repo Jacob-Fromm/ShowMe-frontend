@@ -127,20 +127,36 @@ export const setUser = userObj => {
 }
 
 export const signupUser = newUser => {
+    console.log("newUser in action: ", newUser)
     return function (dispatch) {
         fetch("http://localhost:3000/api/v1/users", {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "accept": "application/json"
+                "accepts": "application/json"
             },
-            body: JSON.stringify(newUser)
+            body: JSON.stringify({user: newUser})
         })
             .then(resp=>resp.json())
-            .then(data => dispatch({type: SIGNUP_USER, payload: data}))
+            .then(data => dispatch({type: SET_USER, payload: data}))
     }
 }
 
+export const loginUser = userObj => {
+    console.log("userObj in action: ", userObj)
+    return function (dispatch) {
+        fetch("http://localhost:3000/api/v1/login", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accepts": "application/json"
+            },
+            body: JSON.stringify({user: userObj})
+        })
+            .then(resp=>resp.json())
+            .then(data => dispatch({ type: SET_USER, payload: data }))
+    }
+}
 
 
 // dispatch({ type: GET_SHOWS, payload: data })

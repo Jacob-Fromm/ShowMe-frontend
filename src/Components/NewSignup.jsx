@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from "react-redux"
 import {signupUser} from "../Redux/actions"
+import {useHistory} from "react-router-dom"
 
 function Copyright() {
   return (
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = props => {
   const classes = useStyles();
+  const history = useHistory();
 
     const [user, setUser] = useState({
         name: "",
@@ -57,23 +59,29 @@ const SignUp = props => {
         password: ""
     })
 
+    // const validUser = () => {
+    //     if (props.currentUser !== {}){
+    //         history.push("/profile")
+    //     }
+    // }
+
     const formChangeHandler = (e) => {
         const { name, value } = e.target
         setUser({ ...user, [name]: value })
 
     }
-    console.log("user", user)
 
-    const submitNewUser = (e, newUser) => {
+    const submitNewUser = (e) => {
         e.preventDefault()
-        props.signupUser(newUser)
-        setUser({user: {
+        console.log("newUser in signup: ", user)
+        props.addUser(user)
+        history.push("/profile")
+        setUser({
             name: "",
             email: "",
             password: ""
-        }})
+        })
     }
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -140,7 +148,7 @@ const SignUp = props => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login_test" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -155,7 +163,11 @@ const SignUp = props => {
 }
 
 const mdp = dispatch => {
-    return {signupUser: (newUser) => dispatch(signupUser(newUser))}
+    return {addUser: (newUser) => dispatch(signupUser(newUser))}
 }
 
-export default connect(null, mdp)(SignUp)
+const msp = state => {
+    return {currentUser: state.currentUser}
+}
+
+export default connect(msp, mdp)(SignUp)
