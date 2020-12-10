@@ -51,6 +51,12 @@ class App extends React.Component {
     }
   }
 
+  logoutHandler = () => {
+    localStorage.removeItem("token")
+    this.props.history.push("/")
+    this.props.saveUser(null)
+  }
+
   
   render(){
     
@@ -59,16 +65,18 @@ class App extends React.Component {
       return (
         <>
         <div className="header">
-            <Links />
+            <Links clickHandler={this.logoutHandler}/>
             <Header />
         </div>
         <Switch>
-          {/* <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/> */}
           <Route path="/comedians" render={() => <ComediansContainer /> } />
-          {/* <Route path= "/login" render={() => <Login fans={this.props.fans}/>} /> */}
           <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
-          <Route path="/profile/" render={() => <FanPage />}/>
-          {/* <Route path="/fans/:id" render={({match}) => <FanPage />}/> */}
+          <Route path="/profile" render={
+              this.props.state.currentUser ? 
+                () => <FanPage />
+              : 
+                () => <Redirect to="/login" />
+              }/>
           <Route path="/login" render={() => <NewLogin />} />
           <Route path="/signup" render={(routerProps) => <NewSignup routerProps={routerProps}/>} />
           <Route exact path="/" component={AppWrapper} />
