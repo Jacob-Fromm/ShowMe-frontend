@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from "react-redux"
-import {signupUser} from "../Redux/actions"
+import {signupUser, loginUser} from "../Redux/actions"
 import {useHistory} from "react-router-dom"
 
 function Copyright() {
@@ -59,6 +59,8 @@ const SignUp = props => {
         password: ""
     })
 
+    // const [user2, setUser2] = useState(props.currentUser)
+
     // const validUser = () => {
     //     if (props.currentUser !== {}){
     //         history.push("/profile")
@@ -75,13 +77,22 @@ const SignUp = props => {
         e.preventDefault()
         console.log("newUser in signup: ", user)
         props.addUser(user)
-        history.push("/profile")
+        // props.login(user)
         setUser({
             name: "",
             email: "",
             password: ""
         })
+        history.push("/login")
     }
+
+    // useEffect(() => {
+    //     setUser2(props.currentUser)
+    //     if (user2) {
+    //         localStorage.setItem("token", user2.jwt)
+    //         history.push("/profile")
+    //     }
+    // })
 
   return (
     <Container component="main" maxWidth="xs">
@@ -149,7 +160,7 @@ const SignUp = props => {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
-                Already have an account? Sign in
+                Already have an account? Log in
               </Link>
             </Grid>
           </Grid>
@@ -163,7 +174,10 @@ const SignUp = props => {
 }
 
 const mdp = dispatch => {
-    return {addUser: (newUser) => dispatch(signupUser(newUser))}
+    return {
+        addUser: (newUser) => dispatch(signupUser(newUser)),
+        // login: (userObj) => dispatch(loginUser(userObj)) 
+      }
 }
 
 const msp = state => {

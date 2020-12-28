@@ -45,22 +45,21 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(resp=>resp.json())
-        .then(data => this.props.saveUser(data))
+        .then(data => this.props.saveUser(data.user))
     } else {
-      this.props.history.push("/login")
+      // this.props.history.push("/")
     }
   }
 
   logoutHandler = () => {
     localStorage.removeItem("token")
     this.props.history.push("/")
-    this.props.saveUser(null)
+    // this.props.saveUser(null)
   }
 
   
   render(){
     
-      console.log("redux state in app", this.props.state)
       console.log("current user", this.props.state.currentUser)
       return (
         <>
@@ -72,13 +71,13 @@ class App extends React.Component {
           <Route path="/comedians" render={() => <ComediansContainer /> } />
           <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
           <Route path="/profile" render={
-              this.props.state.currentUser ? 
+              localStorage.getItem("token") !== undefined ? 
                 () => <FanPage />
               : 
                 () => <Redirect to="/login" />
               }/>
           <Route path="/login" render={() => <NewLogin />} />
-          <Route path="/signup" render={(routerProps) => <NewSignup routerProps={routerProps}/>} />
+          <Route path="/signup" render={() => <NewSignup />} />
           <Route exact path="/" component={AppWrapper} />
         </Switch>
 
@@ -92,7 +91,8 @@ const mdp = (dispatch) => {
   return { fetchShows: () => dispatch(getShows()), 
     fetchComics: () => dispatch(getComics()), 
     fetchFans: () => dispatch(getFans()),
-    saveUser: (userObj) => dispatch(setUser(userObj)) }
+    saveUser: (userObj) => dispatch(setUser(userObj)) 
+  }
 
 }
 

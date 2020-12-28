@@ -59,7 +59,7 @@ function NewLogin(props) {
         password: ""
     })
 
-    const [user2, setUser2] = useState(props.currentUser)
+    // const [user2, setUser2] = useState(props.currentUser)
 
     const formChangeHandler = (e) => {
         const { name, value } = e.target
@@ -74,14 +74,16 @@ function NewLogin(props) {
     }
 
 
-    useEffect(() => {
-        setUser2(props.currentUser)
-        if (user2) {
-            localStorage.setItem("token", user2.jwt)
-            history.push("/profile")
-        }
-    })
+    // useEffect(() => {
+    //     setUser2(props.currentUser)
+    //     if (user2) {
+    //         localStorage.setItem("token", user.jwt)
+    //         // history.push("/profile")
+    //     }
+    // })
 
+    // console.log("useEffect user2: ", user2)
+    // console.log("login user2? ", !!user2)
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />

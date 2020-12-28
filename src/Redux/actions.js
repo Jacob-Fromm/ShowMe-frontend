@@ -154,7 +154,10 @@ export const loginUser = userObj => {
             body: JSON.stringify({user: userObj})
         })
             .then(resp=>resp.json())
-            .then(data => dispatch({ type: SET_USER, payload: data }))
+            .then(data => {
+                console.log("token in action ", data.jwt)
+                localStorage.setItem("token", data.jwt)
+                dispatch({ type: SET_USER, payload: data.user })})
     }
 }
 

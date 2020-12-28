@@ -25,7 +25,7 @@ function Links(props) {
             <Link component={RouterLink} to="/comedians"  >All Comedians</Link>
             <Link component={RouterLink} to="/signup" >Create Account</Link>
             <Link component={RouterLink} to="/profile" >Profile</Link>
-            {props.user ? 
+            {localStorage.getItem("token") ? 
                 
                 <Link onClick={props.clickHandler} component={RouterLink} to="/" >Log Out</Link>
                 : 

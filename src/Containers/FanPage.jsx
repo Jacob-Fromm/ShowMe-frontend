@@ -24,12 +24,13 @@ function FanPage(props){
     //     return props.currentUser.comedians.map(comic => <h2>{comic.name}</h2>)
     // }
 
-    console.log(props)
+    console.log("profile props ", props)
     return(
         <>
         {props.currentUser ?
                 <>
-                    <h1>Welcome, {props.currentUser.user.name.split(" ")[0]}</h1>
+                    <h1>Welcome, {props.currentUser.name}</h1>
+                    {/* <h1>Welcome, {props.currentUser.user.name.split(" ")[0]}</h1> */}
                     <h2>Your Favorite Comedians:</h2>
                 </>
             : 

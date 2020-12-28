@@ -31,6 +31,7 @@ function usersReducer(state = defaultState.currentUser, action){
         case SET_FAN:
             return action.payload
         case SET_USER:
+            console.log("reducer data: ", action.payload)
             return action.payload
         case FOLLOW_COMIC:
             console.log("state, action: ", state, action)
