@@ -1,5 +1,5 @@
 import {combineReducers} from "redux"
-import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELETE_SHOW } from "./actionTypes";
+import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELETE_SHOW, ADD_COMEDIAN, SET_FAN, ADD_FANS_FROM_FETCH, SET_USER, FOLLOW_COMIC, SIGNUP_USER} from "./actionTypes";
 
 // const rootReducer = (state = {
 //     comedians: [],
@@ -21,13 +21,43 @@ import { ADD_COMICS_FROM_FETCH, ADD_SHOWS_FROM_FETCH, ADD_SHOW, EDIT_SHOW, DELET
 
 const defaultState = {
     comedians: [],
-    shows: []
+    shows: [],
+    fans: [],
+    currentUser: null
+}
+
+function usersReducer(state = defaultState.currentUser, action){
+    switch (action.type) {
+        case SET_FAN:
+            return action.payload
+        case SET_USER:
+            console.log("reducer data: ", action.payload)
+            return action.payload
+        case FOLLOW_COMIC:
+            console.log("state, action: ", state, action)
+                return {...state, comedians: [...state.comedians, action.payload]}
+        default:
+            return state
+    }
+}
+
+
+function fansReducer(state=defaultState.fans, action){
+    switch (action.type) {
+        case ADD_FANS_FROM_FETCH:
+            console.log("fans fetch", action.payload)
+            return action.payload
+        default:
+            return state
+    }
 }
 
 function comediansReducer(state = defaultState.comedians, action){
     switch (action.type) {
         case ADD_COMICS_FROM_FETCH:
             return action.payload
+        case ADD_COMEDIAN:
+            return [...state, action.payload]
         default:
             return state
           
@@ -39,6 +69,7 @@ function showsReducer(state = defaultState.shows, action){
        case ADD_SHOWS_FROM_FETCH:
            return action.payload
         case ADD_SHOW:
+            console.log("new show:", action.payload)
             return  [...state, action.payload]
         case EDIT_SHOW:
             break;
@@ -49,9 +80,13 @@ function showsReducer(state = defaultState.shows, action){
    }
 }
 
+
+
 const rootReducer = combineReducers({
     comedians: comediansReducer,
-    shows: showsReducer
+    events: showsReducer,
+    fans: fansReducer,
+    currentUser: usersReducer
 })
 
 export default rootReducer

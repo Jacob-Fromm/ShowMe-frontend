@@ -17,79 +17,70 @@ import ComedianProfile from './Components/ComedianPreview';
 import ComediansContainer from "./Containers/ComediansContainer"
 import Header from "./Components/Header"
 import { connect } from 'react-redux'
-import { getShows, getComics } from "./Redux/actions"
+import { getShows, getComics, getFans, setUser } from "./Redux/actions"
 import Links from "./Components/NavBar"
+import AppWrapper from "./Components/AppWrapper"
+import Login from "./Components/Login"
+import FanPage from "./Containers/FanPage"
+import NewLogin from "./Components/NewLogin"
+import NewSignup from "./Components/NewSignup"
+import shadows from '@material-ui/core/styles/shadows';
 
 class App extends React.Component {
 
   state = {
-    currentUser: {},
-    isComedianLoggedIn: false,
+    currentUser: this.props.currentUser,
+    isLoggedIn: this.props.isLoggedIn,
     api: []
   }
 
   componentDidMount(){
-    this.props.fetchShows()
-    this.props.fetchComics()
+    // this.props.fetchShows()
+    // this.props.fetchComics()
+    // this.props.fetchFans()
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch("http://localhost:3000/api/v1/profile", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then(resp=>resp.json())
+        .then(data => this.props.saveUser(data.user))
+    } else {
+      // this.props.history.push("/")
+    }
   }
 
-
-  // fetch('http://localhost:3000/api/v1/fans', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     Accept: 'application/json'
-  //   },
-  //   body: JSON.stringify({
-  //     fan: {
-  //       name: "sean padden",
-  //       email: "seanp@gmail.com",
-  //       password: "sean",
-  //     }
-  //   })
-  // })
-  //   .then(r => r.json())
-  //   .then(console.log)
-  comedianSignupSubmitHandler = (newUser) => {
-    console.log("new user in app.js", newUser)
-    fetch("http://localhost:3000/api/v1/comedians", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json"
-      },
-      body: JSON.stringify({
-        comedian: {
-          name: newUser.name,
-          email: newUser.email,
-          password: newUser.password,
-          personal_website: newUser.website,
-          city: newUser.city
-        }
-      })
-    })
-      .then(r => r.json())
-      .then(user => {
-        this.setState({ currentUser: user, isComedianLoggedIn: true })
-      })
+  logoutHandler = () => {
+    localStorage.removeItem("token")
+    this.props.history.push("/")
+    // this.props.saveUser(null)
   }
+
   
   render(){
-      console.log("state in app", this.state.api)
-      if (this.state.isComedianLoggedIn) {
-        return <Redirect to="/comedians" />
-      }
+    
+      console.log("current user", this.props.state.currentUser)
       return (
         <>
         <div className="header">
-            <Links />
+            <Links clickHandler={this.logoutHandler}/>
             <Header />
         </div>
         <Switch>
-          <Route exact path="/" render={() => <Welcome /> } />
-          <Route path="/signup" render={() => <SignupComedian signupHandler={this.comedianSignupSubmitHandler} />}/>
           <Route path="/comedians" render={() => <ComediansContainer /> } />
+          <Route path="/welcome" render={(routerProps) => < Welcome routerProps={routerProps} />} />
+          <Route path="/profile" render={
+              localStorage.getItem("token") !== undefined ? 
+                () => <FanPage />
+              : 
+                () => <Redirect to="/login" />
+              }/>
+          <Route path="/login" render={() => <NewLogin />} />
+          <Route path="/signup" render={() => <NewSignup />} />
+          <Route exact path="/" component={AppWrapper} />
         </Switch>
+
         </>
       );
   }
@@ -97,8 +88,16 @@ class App extends React.Component {
 }
 
 const mdp = (dispatch) => {
-  return { fetchShows: () => dispatch(getShows()), fetchComics: () => dispatch(getComics()) }
+  return { fetchShows: () => dispatch(getShows()), 
+    fetchComics: () => dispatch(getComics()), 
+    fetchFans: () => dispatch(getFans()),
+    saveUser: (userObj) => dispatch(setUser(userObj)) 
+  }
 
 }
 
-export default connect(null, mdp)(withRouter(App))
+const msp = (state) => {
+  return {state: state}
+}
+
+export default withRouter(connect(msp, mdp)((App)))

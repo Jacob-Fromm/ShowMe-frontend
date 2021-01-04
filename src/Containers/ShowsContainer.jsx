@@ -5,17 +5,12 @@ import ShowCard from "../Components/ShowCard"
 
 class AllShows extends React.Component {
         
-  
-
-    // componentDidMount(){
-    //     this.props.fetchShows()
-    // }
+    filterShows = () => {
+        return this.props.events.filter(event => event.comedian_id === this.props.comedian.id)
+    }
 
     render(){
-        // console.log("allshows state", this.props.fetchShows())
-        // console.log("digging into props:", this.props.comedian.events)
-        let shows = this.props.comedian.events
-        console.log("all shows props", this.props)
+        let shows = this.filterShows()
         return (
             <>
                 <h1>This Comedian's Shows</h1>
@@ -32,7 +27,7 @@ class AllShows extends React.Component {
 // }
 
 const msp = (state) => {
-    return { comedians: state.comedians, shows: state.shows }
+    return { comedians: state.comedians, events: state.events }
 }
 
 export default connect(msp)(AllShows)
